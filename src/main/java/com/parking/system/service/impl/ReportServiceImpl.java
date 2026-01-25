@@ -4,7 +4,6 @@ import com.parking.system.entity.ParkingTicket;
 import com.parking.system.repository.ParkingSlotRepository;
 import com.parking.system.repository.ParkingTicketRepository;
 import com.parking.system.service.ReportService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -30,8 +29,7 @@ public class ReportServiceImpl implements ReportService {
         LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
         LocalDateTime endOfDay = LocalDate.now().atTime(23, 59, 59);
 
-        // Fetch all tickets exited today (primitive approach for MVP)
-        // Ideally repository should have findByExitTimeBetween
+        // Fetch all tickets exited today
         List<ParkingTicket> tickets = ticketRepository.findAll().stream()
                 .filter(t -> t.getExitTime() != null &&
                         t.getExitTime().isAfter(startOfDay) &&
@@ -39,7 +37,7 @@ public class ReportServiceImpl implements ReportService {
                 .collect(Collectors.toList());
 
         double totalRevenue = tickets.stream()
-                .mapToDouble(ParkingTicket::getAmount)
+                .mapToDouble(t -> t.getAmount() != null ? t.getAmount() : 0.0)
                 .sum();
 
         Map<String, Object> response = new HashMap<>();
@@ -53,19 +51,13 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public Map<String, Object> getOccupancy() {
         long totalSlots = slotRepository.count();
-        long occupiedSlots = slotRepository.count() - slotRepository.findByIsAvailableTrue().size();
-        // Note: findByIsAvailableTrue() returns available slots.
-        // Occupied = Total - Available?
-        // Wait, if I mark "Reserved" as available=false, they count as occupied here?
-        // Technician question: Is a reserved slot "occupied"? For capacity planning,
-        // yes.
-        // For revenue, no.
-        // We'll treating "Occupied" as "Not Available".
+        long availableSlots = slotRepository.findByIsAvailableTrue().size();
+        long occupiedSlots = totalSlots - availableSlots;
 
         Map<String, Object> response = new HashMap<>();
         response.put("totalSlots", totalSlots);
-        response.put("occupiedSlots", occupiedSlots); // Includes reserved
-        response.put("availableSlots", totalSlots - occupiedSlots);
+        response.put("occupiedSlots", occupiedSlots);
+        response.put("availableSlots", availableSlots);
 
         return response;
     }
