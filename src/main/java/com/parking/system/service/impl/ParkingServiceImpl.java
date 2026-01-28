@@ -68,7 +68,7 @@ public class ParkingServiceImpl implements ParkingService {
             bookingRepository.save(booking);
 
         } else {
-            slot = slotRepository.findFirstBySlotTypeAndIsAvailableTrue(request.getVehicleType())
+            slot = slotRepository.findFirstBySlotTypeAndAvailableTrue(request.getVehicleType())
                     .orElseThrow(() -> new SlotNotAvailableException(
                             "No available slot for type: " + request.getVehicleType()));
 
@@ -145,7 +145,7 @@ public class ParkingServiceImpl implements ParkingService {
             throw new RuntimeException("Vehicle already has active booking");
         }
 
-        ParkingSlot slot = slotRepository.findFirstBySlotTypeAndIsAvailableTrue(request.getVehicleType())
+        ParkingSlot slot = slotRepository.findFirstBySlotTypeAndAvailableTrue(request.getVehicleType())
                 .orElseThrow(() -> new SlotNotAvailableException("No available slot to book"));
 
         slot.setAvailable(false);
@@ -201,7 +201,7 @@ public class ParkingServiceImpl implements ParkingService {
 
     @Override
     public List<SlotDTO> getAvailableSlots() {
-        return slotRepository.findByIsAvailableTrue().stream()
+        return slotRepository.findByAvailableTrue().stream()
                 .map(slot -> SlotDTO.builder()
                         .slotNumber(slot.getSlotNumber())
                         .type(slot.getSlotType())

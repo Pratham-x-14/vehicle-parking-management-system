@@ -12,10 +12,10 @@ import java.util.Optional;
 public interface ParkingSlotRepository extends JpaRepository<ParkingSlot, Long> {
 
     // Find first available slot for a specific vehicle type
-    Optional<ParkingSlot> findFirstBySlotTypeAndIsAvailableTrue(VehicleType slotType);
+    Optional<ParkingSlot> findFirstBySlotTypeAndAvailableTrue(VehicleType slotType);
 
     // Find all availables
-    List<ParkingSlot> findByIsAvailableTrue();
+    List<ParkingSlot> findByAvailableTrue();
 
     boolean existsBySlotNumber(String slotNumber);
 }

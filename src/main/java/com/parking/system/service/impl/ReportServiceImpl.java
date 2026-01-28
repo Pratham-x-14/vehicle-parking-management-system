@@ -51,7 +51,7 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public Map<String, Object> getOccupancy() {
         long totalSlots = slotRepository.count();
-        long availableSlots = slotRepository.findByIsAvailableTrue().size();
+        long availableSlots = slotRepository.findByAvailableTrue().size();
         long occupiedSlots = totalSlots - availableSlots;
 
         Map<String, Object> response = new HashMap<>();
