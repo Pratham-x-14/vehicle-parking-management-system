@@ -26,7 +26,7 @@ const History = () => {
                     <tr>
                         <th>Ticket ID</th>
                         <th>Vehicle No</th>
-                        <th>Slot ID</th>
+                        <th>Slot Number</th>
                         <th>Entry Time</th>
                         <th>Exit Time</th>
                         <th>Fee</th>
@@ -38,10 +38,10 @@ const History = () => {
                         <tr key={ticket.id}>
                             <td>{ticket.id}</td>
                             <td>{ticket.vehicleNumber}</td>
-                            <td>{ticket.slotId}</td>
+                            <td>{ticket.slotNumber}</td>
                             <td>{new Date(ticket.entryTime).toLocaleString()}</td>
                             <td>{ticket.exitTime ? new Date(ticket.exitTime).toLocaleString() : '-'}</td>
-                            <td>{ticket.parkingFee !== null ? ticket.parkingFee : '-'}</td>
+                            <td>{ticket.amount !== null ? ticket.amount : '-'}</td>
                             <td>{ticket.exitTime ? 'Completed' : 'Active'}</td>
                         </tr>
                     ))}

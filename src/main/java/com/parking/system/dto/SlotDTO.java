@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SlotDTO {
 
+    private Long id;
     private String slotNumber;
     private VehicleType type;
     private boolean available;

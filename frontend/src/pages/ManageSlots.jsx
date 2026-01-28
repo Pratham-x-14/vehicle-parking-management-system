@@ -81,7 +81,7 @@ const ManageSlots = () => {
                 {slots.map(slot => (
                     <div key={slot.id} className={`slot-card ${slot.available ? 'available' : 'occupied'}`}>
                         <h3>{slot.type}</h3>
-                        <p>ID: {slot.id}</p>
+                        <p>Slot Number: {slot.slotNumber}</p>
                         <p>{slot.available ? 'Available' : 'Occupied'}</p>
                         <button
                             className="btn-delete"

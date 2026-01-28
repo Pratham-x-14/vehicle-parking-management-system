@@ -21,7 +21,7 @@ const ParkVehicle = () => {
         setError('');
         try {
             const response = await parkVehicle(formData);
-            setMessage(`Vehicle parked successfully! Ticket ID: ${response.data.ticketId}, Slot: ${response.data.slotId}`);
+            setMessage(`Vehicle parked successfully! Ticket ID: ${response.data.ticketId}, Slot: ${response.data.slotNumber}`);
             setFormData({ vehicleNumber: '', ownerName: '', vehicleType: 'CAR' });
         } catch (err) {
             setError(err.response?.data?.message || 'Error parking vehicle');

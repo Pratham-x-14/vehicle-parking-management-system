@@ -278,6 +278,7 @@ public class ParkingServiceImpl implements ParkingService {
         ParkingSlot savedSlot = slotRepository.save(slot);
 
         return SlotDTO.builder()
+                .id(savedSlot.getId())
                 .slotNumber(savedSlot.getSlotNumber())
                 .type(savedSlot.getSlotType())
                 .available(savedSlot.isAvailable())

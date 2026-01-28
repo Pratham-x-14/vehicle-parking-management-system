@@ -32,7 +32,7 @@ const Dashboard = () => {
                     {slots.length === 0 ? <p>No slots available.</p> : slots.map(slot => (
                         <div key={slot.id} className={`slot-card ${slot.available ? 'available' : 'occupied'}`}>
                             <h3>{slot.type}</h3>
-                            <p>Slot ID: {slot.id}</p>
+                            <p>Slot Number: {slot.slotNumber}</p>
                             <p className="status">{slot.available ? 'Available' : 'Occupied'}</p>
                         </div>
                     ))}

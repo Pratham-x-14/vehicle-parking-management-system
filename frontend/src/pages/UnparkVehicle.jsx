@@ -13,7 +13,7 @@ const UnparkVehicle = () => {
         setError('');
         try {
             const response = await unparkVehicle({ vehicleNumber });
-            setMessage(`Vehicle unparked! Fee: ${response.data.parkingFee}`);
+            setMessage(`Vehicle unparked! Fee: ${response.data.totalAmount}`);
             setVehicleNumber('');
         } catch (err) {
             setError(err.response?.data?.message || 'Error unparking vehicle');
