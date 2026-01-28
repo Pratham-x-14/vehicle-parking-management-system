@@ -5,6 +5,7 @@ import ParkVehicle from './pages/ParkVehicle';
 import UnparkVehicle from './pages/UnparkVehicle';
 import ManageSlots from './pages/ManageSlots';
 import History from './pages/History';
+import Booking from './pages/Booking';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="unpark" element={<UnparkVehicle />} />
           <Route path="slots" element={<ManageSlots />} />
           <Route path="history" element={<History />} />
+          <Route path="book" element={<Booking />} />
         </Route>
       </Routes>
     </BrowserRouter>

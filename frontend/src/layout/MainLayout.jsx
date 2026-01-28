@@ -11,6 +11,7 @@ const MainLayout = () => {
                     <nav>
                         <Link to="/">Dashboard</Link>
                         <Link to="/park">Park Vehicle</Link>
+                        <Link to="/book">Book Slot</Link>
                         <Link to="/unpark">Unpark Vehicle</Link>
                         <Link to="/slots">Manage Slots</Link>
                         <Link to="/history">History</Link>
