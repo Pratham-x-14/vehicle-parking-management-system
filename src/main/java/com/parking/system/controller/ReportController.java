@@ -11,13 +11,10 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/reports")
+@RequiredArgsConstructor
 public class ReportController {
 
     private final ReportService reportService;
-
-    public ReportController(ReportService reportService) {
-        this.reportService = reportService;
-    }
 
     @GetMapping("/revenue")
     public ResponseEntity<Map<String, Object>> getDailyRevenue() {

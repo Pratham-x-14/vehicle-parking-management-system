@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "vehicles")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Vehicle {
 
     @Id
@@ -26,56 +29,4 @@ public class Vehicle {
     private LocalDateTime entryTime;
 
     private LocalDateTime exitTime;
-
-    public Vehicle() {
-    }
-
-    public Vehicle(Long id, String vehicleNumber, VehicleType vehicleType, LocalDateTime entryTime,
-            LocalDateTime exitTime) {
-        this.id = id;
-        this.vehicleNumber = vehicleNumber;
-        this.vehicleType = vehicleType;
-        this.entryTime = entryTime;
-        this.exitTime = exitTime;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getVehicleNumber() {
-        return vehicleNumber;
-    }
-
-    public void setVehicleNumber(String vehicleNumber) {
-        this.vehicleNumber = vehicleNumber;
-    }
-
-    public VehicleType getVehicleType() {
-        return vehicleType;
-    }
-
-    public void setVehicleType(VehicleType vehicleType) {
-        this.vehicleType = vehicleType;
-    }
-
-    public LocalDateTime getEntryTime() {
-        return entryTime;
-    }
-
-    public void setEntryTime(LocalDateTime entryTime) {
-        this.entryTime = entryTime;
-    }
-
-    public LocalDateTime getExitTime() {
-        return exitTime;
-    }
-
-    public void setExitTime(LocalDateTime exitTime) {
-        this.exitTime = exitTime;
-    }
 }

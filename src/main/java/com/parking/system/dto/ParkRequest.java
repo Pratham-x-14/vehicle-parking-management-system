@@ -1,24 +1,15 @@
 package com.parking.system.dto;
 
+import com.parking.system.enums.VehicleType;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+
+@Data
 public class ParkRequest {
-    @jakarta.validation.constraints.NotNull
+
+    @NotNull
     private String vehicleNumber;
-    @jakarta.validation.constraints.NotNull
-    private com.parking.system.enums.VehicleType vehicleType;
 
-    public String getVehicleNumber() {
-        return vehicleNumber;
-    }
-
-    public void setVehicleNumber(String vehicleNumber) {
-        this.vehicleNumber = vehicleNumber;
-    }
-
-    public com.parking.system.enums.VehicleType getVehicleType() {
-        return vehicleType;
-    }
-
-    public void setVehicleType(com.parking.system.enums.VehicleType vehicleType) {
-        this.vehicleType = vehicleType;
-    }
+    @NotNull
+    private VehicleType vehicleType;
 }

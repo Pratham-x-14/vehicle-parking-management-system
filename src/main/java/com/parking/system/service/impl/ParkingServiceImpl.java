@@ -5,6 +5,7 @@ import com.parking.system.entity.Booking;
 import com.parking.system.entity.ParkingSlot;
 import com.parking.system.entity.ParkingTicket;
 import com.parking.system.entity.Vehicle;
+import lombok.RequiredArgsConstructor;
 import com.parking.system.enums.VehicleType;
 import com.parking.system.exception.SlotNotAvailableException;
 import com.parking.system.exception.VehicleAlreadyParkedException;
@@ -24,20 +25,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ParkingServiceImpl implements ParkingService {
 
     private final ParkingSlotRepository slotRepository;
     private final VehicleRepository vehicleRepository;
     private final ParkingTicketRepository ticketRepository;
     private final BookingRepository bookingRepository;
-
-    public ParkingServiceImpl(ParkingSlotRepository slotRepository, VehicleRepository vehicleRepository,
-            ParkingTicketRepository ticketRepository, BookingRepository bookingRepository) {
-        this.slotRepository = slotRepository;
-        this.vehicleRepository = vehicleRepository;
-        this.ticketRepository = ticketRepository;
-        this.bookingRepository = bookingRepository;
-    }
 
     @Override
     @Transactional
@@ -103,7 +97,7 @@ public class ParkingServiceImpl implements ParkingService {
     @Override
     @Transactional
     public UnparkResponse unparkVehicle(UnparkRequest request) {
-        String vehicleNumber = request.getVehicleNumber();
+        String vehicleNumber = request.getVehicleNumber().trim();
         Vehicle vehicle = vehicleRepository.findByVehicleNumber(vehicleNumber)
                 .orElseThrow(() -> new VehicleNotFoundException("Vehicle not found: " + vehicleNumber));
 
@@ -148,7 +142,7 @@ public class ParkingServiceImpl implements ParkingService {
     @Transactional
     public BookingResponse bookSlot(BookingRequest request) {
         if (bookingRepository.findByVehicleNumberAndStatus(request.getVehicleNumber(), "ACTIVE").isPresent()) {
-            throw new RuntimeException("Vehicle already has an active booking");
+            throw new RuntimeException("Vehicle already has active booking");
         }
 
         ParkingSlot slot = slotRepository.findFirstBySlotTypeAndIsAvailableTrue(request.getVehicleType())
@@ -211,7 +205,7 @@ public class ParkingServiceImpl implements ParkingService {
                 .map(slot -> SlotDTO.builder()
                         .slotNumber(slot.getSlotNumber())
                         .type(slot.getSlotType())
-                        .isAvailable(slot.isAvailable())
+                        .available(slot.isAvailable())
                         .build())
                 .collect(Collectors.toList());
     }
@@ -251,7 +245,7 @@ public class ParkingServiceImpl implements ParkingService {
                 .map(slot -> SlotDTO.builder()
                         .slotNumber(slot.getSlotNumber())
                         .type(slot.getSlotType())
-                        .isAvailable(slot.isAvailable())
+                        .available(slot.isAvailable())
                         .build())
                 .collect(Collectors.toList());
     }
@@ -286,7 +280,7 @@ public class ParkingServiceImpl implements ParkingService {
         return SlotDTO.builder()
                 .slotNumber(savedSlot.getSlotNumber())
                 .type(savedSlot.getSlotType())
-                .isAvailable(savedSlot.isAvailable())
+                .available(savedSlot.isAvailable())
                 .build();
     }
 
