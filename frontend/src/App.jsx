@@ -7,20 +7,26 @@ import ManageSlots from './pages/ManageSlots';
 import History from './pages/History';
 import Booking from './pages/Booking';
 
+import { RoleProvider } from './context/RoleContext';
+import RoleSelection from './pages/RoleSelection';
+
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="park" element={<ParkVehicle />} />
-          <Route path="unpark" element={<UnparkVehicle />} />
-          <Route path="slots" element={<ManageSlots />} />
-          <Route path="history" element={<History />} />
-          <Route path="book" element={<Booking />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <RoleProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<RoleSelection />} />
+          <Route element={<MainLayout />}>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="park" element={<ParkVehicle />} />
+            <Route path="unpark" element={<UnparkVehicle />} />
+            <Route path="slots" element={<ManageSlots />} />
+            <Route path="history" element={<History />} />
+            <Route path="book" element={<Booking />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </RoleProvider>
   );
 }
 
