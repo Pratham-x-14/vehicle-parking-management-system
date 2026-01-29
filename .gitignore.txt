@@ -20,3 +20,29 @@
 jdk-17.0.2/
 jdk*/
 
+
+/target/
+*.log
+*.class
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+
+# Java
+*.class
+*.log
+
+# Build
+/target/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# ❌ NEVER COMMIT JDK
+jdk-17.0.2/
+jdk*/
+
