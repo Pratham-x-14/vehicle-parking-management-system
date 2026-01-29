@@ -29,6 +29,21 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(BookingNotFoundException.class)
+    public ResponseEntity<Object> handleBookingNotFound(BookingNotFoundException ex) {
+        return buildErrorResponse(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(SlotInUseException.class)
+    public ResponseEntity<Object> handleSlotInUse(SlotInUseException ex) {
+        return buildErrorResponse(ex.getMessage(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Object> handleIllegalArgument(IllegalArgumentException ex) {
+        return buildErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<Object> handleNoResourceFound(NoResourceFoundException ex) {
         return buildErrorResponse("The requested resource was not found.", HttpStatus.NOT_FOUND);

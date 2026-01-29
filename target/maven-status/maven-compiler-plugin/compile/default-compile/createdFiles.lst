@@ -1,6 +1,5 @@
 com\parking\system\dto\BookingResponse$BookingResponseBuilder.class
 com\parking\system\entity\ParkingSlot.class
-META-INF\maven\com.parking\system\pom.properties
 com\parking\system\dto\BookingRequest.class
 com\parking\system\dto\UnparkRequest.class
 com\parking\system\config\DataInitializer.class
@@ -19,8 +18,6 @@ com\parking\system\service\ReportService.class
 com\parking\system\entity\Booking.class
 com\parking\system\dto\BookingResponse.class
 com\parking\system\exception\VehicleNotFoundException.class
-META-INF\maven\com.parking\system\pom.xml
-META-INF\MANIFEST.MF
 com\parking\system\service\impl\ParkingServiceImpl.class
 com\parking\system\controller\HomeController.class
 com\parking\system\repository\VehicleRepository.class
@@ -28,6 +25,7 @@ com\parking\system\controller\ReportController.class
 com\parking\system\dto\ParkResponse.class
 com\parking\system\ParkingSystemApplication.class
 com\parking\system\service\ParkingService.class
+com\parking\system\exception\SlotInUseException.class
 com\parking\system\dto\SlotDTO$SlotDTOBuilder.class
 com\parking\system\dto\ParkResponse$ParkResponseBuilder.class
 com\parking\system\dto\UnparkResponse$UnparkResponseBuilder.class
@@ -38,5 +36,6 @@ com\parking\system\exception\GlobalExceptionHandler.class
 com\parking\system\repository\ParkingTicketRepository.class
 com\parking\system\controller\ParkingController.class
 com\parking\system\exception\SlotNotAvailableException.class
+com\parking\system\exception\BookingNotFoundException.class
 com\parking\system\entity\Vehicle.class
 com\parking\system\dto\ParkingTicketDTO.class

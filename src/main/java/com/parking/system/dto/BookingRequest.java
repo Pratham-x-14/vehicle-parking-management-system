@@ -7,4 +7,7 @@ import lombok.Data;
 public class BookingRequest {
     private String vehicleNumber;
     private VehicleType vehicleType;
+    private String paymentStatus;
+    private String transactionId;
+    private Double amount;
 }

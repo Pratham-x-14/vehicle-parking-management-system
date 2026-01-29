@@ -7,6 +7,8 @@ import com.parking.system.entity.ParkingTicket;
 import com.parking.system.entity.Vehicle;
 import lombok.RequiredArgsConstructor;
 import com.parking.system.enums.VehicleType;
+import com.parking.system.exception.BookingNotFoundException;
+import com.parking.system.exception.SlotInUseException;
 import com.parking.system.exception.SlotNotAvailableException;
 import com.parking.system.exception.VehicleAlreadyParkedException;
 import com.parking.system.exception.VehicleNotFoundException;
@@ -139,10 +141,9 @@ public class ParkingServiceImpl implements ParkingService {
     }
 
     @Override
-    @Transactional
     public BookingResponse bookSlot(BookingRequest request) {
         if (bookingRepository.findByVehicleNumberAndStatus(request.getVehicleNumber(), "ACTIVE").isPresent()) {
-            throw new RuntimeException("Vehicle already has active booking");
+            throw new VehicleAlreadyParkedException("Vehicle already has active booking");
         }
 
         ParkingSlot slot = slotRepository.findFirstBySlotTypeAndAvailableTrue(request.getVehicleType())
@@ -152,12 +153,25 @@ public class ParkingServiceImpl implements ParkingService {
         slot.setReserved(true);
         slotRepository.save(slot);
 
+        // Validate Payment
+        if (!"PAID".equals(request.getPaymentStatus())) {
+            throw new IllegalArgumentException("Payment required to book a slot.");
+        }
+
+        // Calculate/Validate Amount
+        if (request.getAmount() == null || request.getAmount() <= 0) {
+            throw new IllegalArgumentException("Invalid booking amount.");
+        }
+
         Booking booking = new Booking();
         booking.setVehicleNumber(request.getVehicleNumber());
         booking.setVehicleType(request.getVehicleType());
         booking.setBookingTime(LocalDateTime.now());
         booking.setValidUntil(LocalDateTime.now().plusHours(24));
         booking.setStatus("ACTIVE");
+        booking.setPaymentStatus("PAID");
+        booking.setTransactionId(request.getTransactionId());
+        booking.setAmount(request.getAmount());
         booking.setSlotId(slot.getId());
 
         bookingRepository.save(booking);
@@ -175,10 +189,10 @@ public class ParkingServiceImpl implements ParkingService {
     @Override
     public void cancelBooking(Long bookingId) {
         Booking booking = bookingRepository.findById(bookingId)
-                .orElseThrow(() -> new RuntimeException("Booking not found"));
+                .orElseThrow(() -> new BookingNotFoundException("Booking not found"));
 
         if (!"ACTIVE".equals(booking.getStatus())) {
-            throw new RuntimeException("Booking is not active");
+            throw new IllegalArgumentException("Booking is not active");
         }
 
         ParkingSlot slot = slotRepository.findById(booking.getSlotId()).orElse(null);
@@ -203,6 +217,7 @@ public class ParkingServiceImpl implements ParkingService {
     public List<SlotDTO> getAvailableSlots() {
         return slotRepository.findByAvailableTrue().stream()
                 .map(slot -> SlotDTO.builder()
+                        .id(slot.getId())
                         .slotNumber(slot.getSlotNumber())
                         .type(slot.getSlotType())
                         .available(slot.isAvailable())
@@ -233,16 +248,23 @@ public class ParkingServiceImpl implements ParkingService {
     @Override
     @Transactional
     public void deleteVehicle(Long vehicleID) {
-        if (!vehicleRepository.existsById(vehicleID)) {
-            throw new VehicleNotFoundException("Vehicle not found with ID: " + vehicleID);
+        Vehicle vehicle = vehicleRepository.findById(vehicleID)
+                .orElseThrow(() -> new VehicleNotFoundException("Vehicle not found with ID: " + vehicleID));
+
+        List<ParkingTicket> tickets = ticketRepository.findByVehicle(vehicle);
+        if (!tickets.isEmpty()) {
+            ticketRepository.deleteAllInBatch(tickets);
+            ticketRepository.flush();
         }
-        vehicleRepository.deleteById(vehicleID);
+
+        vehicleRepository.delete(vehicle);
     }
 
     @Override
     public List<SlotDTO> getAllSlots() {
         return slotRepository.findAll().stream()
                 .map(slot -> SlotDTO.builder()
+                        .id(slot.getId())
                         .slotNumber(slot.getSlotNumber())
                         .type(slot.getSlotType())
                         .available(slot.isAvailable())
@@ -288,18 +310,13 @@ public class ParkingServiceImpl implements ParkingService {
     @Override
     public void removeSlot(Long slotId) {
         if (!slotRepository.existsById(slotId)) {
-            throw new RuntimeException("Slot found with ID: " + slotId);
+            throw new IllegalArgumentException("Slot not found with ID: " + slotId);
         }
 
-        // Check if slot has dependent data (tickets/bookings) before determining how to
-        // delete
-        // For now, blocking deletion if used to prevent FK violations
-        // Ideally, we might want to soft-delete or cascade if business logic permits
-        // Assuming simple protection for now:
         try {
             slotRepository.deleteById(slotId);
         } catch (Exception e) {
-            throw new RuntimeException("Cannot remove slot. It may be in use by tickets or bookings.", e);
+            throw new SlotInUseException("Cannot remove slot. It may be in use by tickets or bookings.");
         }
     }
 }

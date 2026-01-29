@@ -37,4 +37,13 @@ public class Booking {
 
     @Column(nullable = false)
     private String status; // ACTIVE, COMPLETED, CANCELLED
+
+    @Column
+    private String paymentStatus; // PENDING, PAID
+
+    @Column
+    private String transactionId;
+
+    @Column
+    private Double amount;
 }

@@ -19,7 +19,9 @@ D:\Programs\NARESH IT\vehicleParkingSystem\src\main\java\com\parking\system\enti
 D:\Programs\NARESH IT\vehicleParkingSystem\src\main\java\com\parking\system\entity\ParkingTicket.java
 D:\Programs\NARESH IT\vehicleParkingSystem\src\main\java\com\parking\system\entity\Vehicle.java
 D:\Programs\NARESH IT\vehicleParkingSystem\src\main\java\com\parking\system\enums\VehicleType.java
+D:\Programs\NARESH IT\vehicleParkingSystem\src\main\java\com\parking\system\exception\BookingNotFoundException.java
 D:\Programs\NARESH IT\vehicleParkingSystem\src\main\java\com\parking\system\exception\GlobalExceptionHandler.java
+D:\Programs\NARESH IT\vehicleParkingSystem\src\main\java\com\parking\system\exception\SlotInUseException.java
 D:\Programs\NARESH IT\vehicleParkingSystem\src\main\java\com\parking\system\exception\SlotNotAvailableException.java
 D:\Programs\NARESH IT\vehicleParkingSystem\src\main\java\com\parking\system\exception\VehicleAlreadyParkedException.java
 D:\Programs\NARESH IT\vehicleParkingSystem\src\main\java\com\parking\system\exception\VehicleNotFoundException.java
