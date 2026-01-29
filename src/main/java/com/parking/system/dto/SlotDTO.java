@@ -14,6 +14,7 @@ public class SlotDTO {
 
     private Long id;
     private String slotNumber;
+    private String vehicleNumber;
     private VehicleType type;
     private boolean available;
 }

@@ -25,20 +25,20 @@ public class DataInitializer {
             if (parkingSlotRepository.count() == 0) {
                 // Initialize with some default slots
                 ParkingSlot[] slots = {
-                        new ParkingSlot(null, "B-001", VehicleType.BIKE, true, false),
-                        new ParkingSlot(null, "B-002", VehicleType.BIKE, true, false),
-                        new ParkingSlot(null, "B-003", VehicleType.BIKE, true, false),
-                        new ParkingSlot(null, "B-004", VehicleType.BIKE, true, false),
-                        new ParkingSlot(null, "B-005", VehicleType.BIKE, true, false),
+                        new ParkingSlot(null, "B-001", null, VehicleType.BIKE, true, false),
+                        new ParkingSlot(null, "B-002", null, VehicleType.BIKE, true, false),
+                        new ParkingSlot(null, "B-003", null, VehicleType.BIKE, true, false),
+                        new ParkingSlot(null, "B-004", null, VehicleType.BIKE, true, false),
+                        new ParkingSlot(null, "B-005", null, VehicleType.BIKE, true, false),
 
-                        new ParkingSlot(null, "C-001", VehicleType.CAR, true, false),
-                        new ParkingSlot(null, "C-002", VehicleType.CAR, true, false),
-                        new ParkingSlot(null, "C-003", VehicleType.CAR, true, false),
-                        new ParkingSlot(null, "C-004", VehicleType.CAR, true, false),
-                        new ParkingSlot(null, "C-005", VehicleType.CAR, true, false),
+                        new ParkingSlot(null, "C-001", null, VehicleType.CAR, true, false),
+                        new ParkingSlot(null, "C-002", null, VehicleType.CAR, true, false),
+                        new ParkingSlot(null, "C-003", null, VehicleType.CAR, true, false),
+                        new ParkingSlot(null, "C-004", null, VehicleType.CAR, true, false),
+                        new ParkingSlot(null, "C-005", null, VehicleType.CAR, true, false),
 
-                        new ParkingSlot(null, "T-001", VehicleType.TRUCK, true, false),
-                        new ParkingSlot(null, "T-002", VehicleType.TRUCK, true, false)
+                        new ParkingSlot(null, "T-001", null, VehicleType.TRUCK, true, false),
+                        new ParkingSlot(null, "T-002", null, VehicleType.TRUCK, true, false)
                 };
 
                 parkingSlotRepository.saveAll(Arrays.asList(slots));

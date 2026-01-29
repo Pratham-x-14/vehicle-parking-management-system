@@ -64,6 +64,7 @@ public class ParkingServiceImpl implements ParkingService {
                     .orElseThrow(() -> new SlotNotAvailableException("Reserved slot not found (system error)"));
 
             slot.setReserved(false);
+            slot.setVehicleNumber(vehicle.getVehicleNumber());
             slotRepository.save(slot);
 
             booking.setStatus("COMPLETED");
@@ -75,6 +76,7 @@ public class ParkingServiceImpl implements ParkingService {
                             "No available slot for type: " + request.getVehicleType()));
 
             slot.setAvailable(false);
+            slot.setVehicleNumber(vehicle.getVehicleNumber());
             slotRepository.save(slot);
         }
 
@@ -125,6 +127,7 @@ public class ParkingServiceImpl implements ParkingService {
 
         slot.setAvailable(true);
         slot.setReserved(false);
+        slot.setVehicleNumber(null);
         slotRepository.save(slot);
 
         vehicle.setExitTime(exitTime);
@@ -151,6 +154,7 @@ public class ParkingServiceImpl implements ParkingService {
 
         slot.setAvailable(false);
         slot.setReserved(true);
+        slot.setVehicleNumber(request.getVehicleNumber());
         slotRepository.save(slot);
 
         // Validate Payment
@@ -199,6 +203,7 @@ public class ParkingServiceImpl implements ParkingService {
         if (slot != null) {
             slot.setAvailable(true);
             slot.setReserved(false);
+            slot.setVehicleNumber(null);
             slotRepository.save(slot);
         }
 
@@ -221,6 +226,7 @@ public class ParkingServiceImpl implements ParkingService {
                         .slotNumber(slot.getSlotNumber())
                         .type(slot.getSlotType())
                         .available(slot.isAvailable())
+                        .vehicleNumber(slot.getVehicleNumber())
                         .build())
                 .collect(Collectors.toList());
     }
@@ -268,6 +274,7 @@ public class ParkingServiceImpl implements ParkingService {
                         .slotNumber(slot.getSlotNumber())
                         .type(slot.getSlotType())
                         .available(slot.isAvailable())
+                        .vehicleNumber(slot.getVehicleNumber())
                         .build())
                 .collect(Collectors.toList());
     }
@@ -304,6 +311,7 @@ public class ParkingServiceImpl implements ParkingService {
                 .slotNumber(savedSlot.getSlotNumber())
                 .type(savedSlot.getSlotType())
                 .available(savedSlot.isAvailable())
+                .vehicleNumber(savedSlot.getVehicleNumber())
                 .build();
     }
 
